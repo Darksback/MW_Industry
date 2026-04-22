@@ -8,34 +8,51 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowLeft, Upload } from "lucide-react";
+import { ArrowLeft, Upload, Loader2 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 
 export default function NewProductPage() {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
   const [error, setError] = useState("");
-  const [imageBase64, setImageBase64] = useState<string | null>(null);
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    if (file.size > 2 * 1024 * 1024) {
-      setError("Image size must be less than 2MB to store in database.");
-      return;
-    }
+    // Show local preview immediately
+    setImagePreview(URL.createObjectURL(file));
+    setIsUploading(true);
+    setError("");
 
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setImageBase64(reader.result as string);
-    };
-    reader.readAsDataURL(file);
+    try {
+      const response = await fetch(`/api/upload?filename=${encodeURIComponent(file.name)}`, {
+        method: "POST",
+        body: file,
+      });
+
+      if (!response.ok) {
+        const err = await response.json();
+        throw new Error(err.error || "Upload failed");
+      }
+
+      const blob = await response.json();
+      setImageUrl(blob.url);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Image upload failed. Please try again.");
+      setImagePreview(null);
+    } finally {
+      setIsUploading(false);
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (isUploading) return;
     setIsSubmitting(true);
     setError("");
 
@@ -47,12 +64,12 @@ export default function NewProductPage() {
       price: formData.get("price") as string,
       category: formData.get("category") as string,
       short_description: formData.get("short_description") as string,
-      images: imageBase64 ? [imageBase64] : [],
+      images: imageUrl ? [imageUrl] : [],
       in_stock: true,
     };
 
     const result = await createProduct(data);
-    
+
     if (result.success) {
       router.push("/admin/products");
     } else {
@@ -121,21 +138,33 @@ export default function NewProductPage() {
                 <Label>Product Image</Label>
                 <div className="flex items-center space-x-6">
                   <div className="w-32 h-32 rounded-lg border-2 border-dashed border-border flex items-center justify-center overflow-hidden bg-secondary relative">
-                    {imageBase64 ? (
-                      <Image src={imageBase64} alt="Preview" fill className="object-cover" />
+                    {isUploading ? (
+                      <Loader2 className="w-8 h-8 text-primary animate-spin" />
+                    ) : imagePreview ? (
+                      <Image src={imagePreview} alt="Preview" fill className="object-cover" />
                     ) : (
                       <Upload className="w-8 h-8 text-muted-foreground" />
                     )}
+                    {imageUrl && !isUploading && (
+                      <div className="absolute bottom-1 left-0 right-0 text-center">
+                        <span className="text-[9px] bg-green-500/80 text-white px-1 rounded">✓ Uploaded</span>
+                      </div>
+                    )}
                   </div>
                   <div>
-                    <Input 
-                      type="file" 
-                      accept="image/*" 
+                    <Input
+                      type="file"
+                      accept="image/*"
                       onChange={handleImageChange}
+                      disabled={isUploading}
                       className="max-w-xs"
                     />
                     <p className="text-xs text-muted-foreground mt-2">
-                      Max file size: 2MB. Image will be stored securely in the database.
+                      {isUploading
+                        ? "Uploading to Vercel Blob CDN..."
+                        : imageUrl
+                        ? "Image uploaded to Vercel Blob CDN ✓"
+                        : "Image will be stored on Vercel Blob CDN for fast global delivery."}
                     </p>
                   </div>
                 </div>
@@ -149,8 +178,8 @@ export default function NewProductPage() {
             )}
 
             <div className="flex justify-end pt-4">
-              <Button type="submit" disabled={isSubmitting}>
-                {isSubmitting ? "Creating..." : "Save Product"}
+              <Button type="submit" disabled={isSubmitting || isUploading}>
+                {isSubmitting ? "Creating..." : isUploading ? "Uploading image..." : "Save Product"}
               </Button>
             </div>
           </form>
