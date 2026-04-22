@@ -1,0 +1,95 @@
+@import "tailwindcss";
+
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --background: #000000;
+  --foreground: #ffffff;
+  --card: #252627;
+  --card-foreground: #ffffff;
+  --popover: #252627;
+  --popover-foreground: #ffffff;
+  --primary: #006fcf;
+  --primary-foreground: #ffffff;
+  --secondary: #4b4f54;
+  --secondary-foreground: #ffffff;
+  --muted: #231f20;
+  --muted-foreground: #a0a0a0;
+  --accent: #61b4e4;
+  --accent-foreground: #000000;
+  --destructive: #f48120;
+  --destructive-foreground: #ffffff;
+  --border: rgba(255, 255, 255, 0.15);
+  --input: rgba(255, 255, 255, 0.15);
+  --ring: rgba(0, 111, 207, 0.5);
+  --radius: 0.3rem;
+  
+  /* Brand specific colors */
+  --color-steel: #4b4f54;
+  --color-steel-light: #61b4e4;
+  --color-success: #3b82f6;
+  --color-warning: #f48120;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  
+  --color-steel: var(--color-steel);
+  --color-steel-light: var(--color-steel-light);
+  --color-success: var(--color-success);
+  --color-warning: var(--color-warning);
+
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+  --font-bebas: var(--font-bebas);
+
+  --animate-scan: scan 3s ease-in-out infinite;
+  
+  @keyframes scan {
+    0% {
+      transform: translateY(-100%);
+    }
+    50% {
+      transform: translateY(100%);
+    }
+    100% {
+      transform: translateY(-100%);
+    }
+  }
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-feature-settings: "rlig" 1, "calt" 1;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
