@@ -17,6 +17,21 @@ export async function createProduct(data: any) {
   }
 }
 
+export async function updateProduct(productId: string, data: any) {
+  try {
+    await db.update(products)
+      .set({ ...data, updated_at: new Date() })
+      .where(eq(products.id, productId));
+    revalidatePath("/admin/products");
+    revalidatePath(`/products/${data.slug}`);
+    revalidatePath("/products");
+    return { success: true };
+  } catch (error) {
+    console.error("Failed to update product:", error);
+    return { success: false, message: "Failed to update product. Make sure the Model Code and Slug are unique." };
+  }
+}
+
 export async function updateProductStock(productId: string, inStock: boolean) {
   try {
     await db.update(products).set({ in_stock: inStock }).where(eq(products.id, productId));

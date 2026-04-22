@@ -14,7 +14,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { Plus } from "lucide-react";
+import { Plus, Pencil } from "lucide-react";
 import Image from "next/image";
 
 export const dynamic = "force-dynamic";
@@ -79,7 +79,12 @@ export default async function AdminProducts() {
                     </Badge>
                   </TableCell>
                   <TableCell className="text-right">
-                    <Button variant="ghost" size="sm">Edit</Button>
+                    <Link href={`/admin/products/${product.id}/edit`}>
+                      <Button variant="ghost" size="sm">
+                        <Pencil className="w-3.5 h-3.5 mr-1.5" />
+                        Edit
+                      </Button>
+                    </Link>
                   </TableCell>
                 </TableRow>
               ))}
