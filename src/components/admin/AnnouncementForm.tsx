@@ -28,8 +28,8 @@ const formSchema = z.object({
   subtitle: z.string().optional(),
   button_text: z.string().optional(),
   button_link: z.string().optional(),
-  is_active: z.boolean().default(true),
-  priority: z.number().default(0),
+  is_active: z.boolean(),
+  priority: z.number(),
 });
 
 type FormValues = z.infer<typeof formSchema>;

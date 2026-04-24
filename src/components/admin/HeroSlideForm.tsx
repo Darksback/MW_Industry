@@ -30,9 +30,9 @@ const formSchema = z.object({
   button_text: z.string().min(1, "Button text is required"),
   button_link: z.string().min(1, "Button link is required"),
   image_url: z.string().optional(),
-  bg_color: z.string().default("#f5f5f5"),
-  is_active: z.boolean().default(true),
-  priority: z.number().default(0),
+  bg_color: z.string(),
+  is_active: z.boolean(),
+  priority: z.number(),
 });
 
 type FormValues = z.infer<typeof formSchema>;
