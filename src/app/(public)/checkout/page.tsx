@@ -264,12 +264,17 @@ export default function CheckoutPage() {
             
             <div className="space-y-4 max-h-[40vh] overflow-y-auto pr-2 mb-6">
               {items.map((item) => (
-                <div key={item.product_id} className="flex gap-4">
+                <div key={item.cartItemId} className="flex gap-4">
                   <div className="w-16 h-16 bg-background rounded border border-border flex items-center justify-center shrink-0">
                     <span className="text-[6px] font-mono opacity-30 text-center">NO IMG</span>
                   </div>
                   <div className="flex-1">
                     <h4 className="text-sm font-medium line-clamp-1">{item.name}</h4>
+                    {item.color && (
+                      <span className="text-[10px] font-semibold uppercase tracking-wider bg-secondary/50 px-1.5 py-0.5 rounded text-muted-foreground mt-1 inline-block">
+                        {item.color}
+                      </span>
+                    )}
                     <div className="text-xs text-muted-foreground mt-1 flex justify-between">
                       <span>Qty: {item.quantity}</span>
                       <span className="font-mono">{formatPrice(item.price * item.quantity)}</span>

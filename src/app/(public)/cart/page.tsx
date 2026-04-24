@@ -44,7 +44,7 @@ export default function CartPage() {
             </div>
 
             {items.map((item) => (
-              <div key={item.product_id} className="grid grid-cols-1 sm:grid-cols-12 gap-4 items-center py-6 border-b border-border/50">
+              <div key={item.cartItemId} className="grid grid-cols-1 sm:grid-cols-12 gap-4 items-center py-6 border-b border-border/50">
                 {/* Product Info */}
                 <div className="col-span-1 sm:col-span-6 flex items-center gap-4">
                   <div className="w-20 h-20 bg-secondary/20 rounded-md border border-border flex items-center justify-center shrink-0">
@@ -52,7 +52,15 @@ export default function CartPage() {
                   </div>
                   <div>
                     <h3 className="font-medium text-foreground line-clamp-2">{item.name}</h3>
-                    <p className="text-sm text-muted-foreground mt-1 font-mono">{item.model_code}</p>
+                    <div className="flex items-center gap-2 mt-1">
+                      <p className="text-sm text-muted-foreground font-mono">{item.model_code}</p>
+                      {item.color && (
+                        <>
+                          <span className="text-muted-foreground text-xs">•</span>
+                          <span className="text-xs font-semibold uppercase tracking-wider bg-secondary/50 px-2 py-0.5 rounded-full">{item.color}</span>
+                        </>
+                      )}
+                    </div>
                     <p className="text-sm text-primary mt-1 sm:hidden">{formatPrice(item.price)}</p>
                   </div>
                 </div>
@@ -63,7 +71,7 @@ export default function CartPage() {
                   <div className="flex items-center border border-border rounded-md">
                     <button
                       className="p-2 text-muted-foreground hover:text-foreground transition-colors disabled:opacity-50"
-                      onClick={() => updateQuantity(item.product_id, Math.max(1, item.quantity - 1))}
+                      onClick={() => updateQuantity(item.cartItemId, Math.max(1, item.quantity - 1))}
                       disabled={item.quantity <= 1}
                     >
                       <Minus className="h-4 w-4" />
@@ -71,7 +79,7 @@ export default function CartPage() {
                     <span className="w-8 text-center font-mono text-sm">{item.quantity}</span>
                     <button
                       className="p-2 text-muted-foreground hover:text-foreground transition-colors"
-                      onClick={() => updateQuantity(item.product_id, item.quantity + 1)}
+                      onClick={() => updateQuantity(item.cartItemId, item.quantity + 1)}
                     >
                       <Plus className="h-4 w-4" />
                     </button>
@@ -84,7 +92,7 @@ export default function CartPage() {
                   <div className="flex items-center gap-4">
                     <span className="font-mono font-medium">{formatPrice(item.price * item.quantity)}</span>
                     <button
-                      onClick={() => removeItem(item.product_id)}
+                      onClick={() => removeItem(item.cartItemId)}
                       className="text-muted-foreground hover:text-destructive transition-colors p-2"
                       aria-label="Remove item"
                     >
