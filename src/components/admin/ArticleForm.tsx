@@ -93,21 +93,22 @@ export function ArticleForm({ initialData }: ArticleFormProps) {
 
     setIsUploading(true);
     try {
-      const formData = new FormData();
-      formData.append("file", file);
-
-      const response = await fetch("/api/upload", {
+      const response = await fetch(`/api/upload?filename=${encodeURIComponent(file.name)}`, {
         method: "POST",
-        body: formData,
+        body: file,
       });
 
-      if (!response.ok) throw new Error("Upload failed");
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.error || "Upload failed");
+      }
 
       const data = await response.json();
       form.setValue("featured_image", data.url);
       toast.success("Image uploaded successfully");
     } catch (error) {
-      toast.error("Failed to upload image");
+      const message = error instanceof Error ? error.message : "Failed to upload image";
+      toast.error(message);
       console.error(error);
     } finally {
       setIsUploading(false);

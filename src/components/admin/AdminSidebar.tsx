@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, Package, LogOut, Menu, X, Newspaper } from "lucide-react";
+import { LayoutDashboard, Package, LogOut, Menu, X, Newspaper, Megaphone, ImagePlus } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
@@ -15,6 +15,8 @@ export function AdminSidebar({ logoutAction }: { logoutAction: (formData: FormDa
     { name: "Orders", href: "/admin/dashboard", icon: LayoutDashboard },
     { name: "Products", href: "/admin/products", icon: Package },
     { name: "Articles", href: "/admin/articles", icon: Newspaper },
+    { name: "Announcements", href: "/admin/announcements", icon: Megaphone },
+    { name: "Hero Carousel", href: "/admin/hero", icon: ImagePlus },
   ];
 
 
@@ -41,13 +43,13 @@ export function AdminSidebar({ logoutAction }: { logoutAction: (formData: FormDa
 
       {/* Sidebar */}
       <aside className={cn(
-        "fixed inset-y-0 left-0 z-50 w-64 bg-card border-r border-border/50 p-6 flex flex-col transition-transform duration-300 md:translate-x-0 md:static md:h-screen md:sticky md:top-0",
+        "fixed inset-y-0 left-0 z-50 w-64 bg-[#1a1a1a] border-r border-white/5 p-6 flex flex-col transition-transform duration-300 md:translate-x-0 md:static md:h-screen md:sticky md:top-0 shadow-2xl",
         isOpen ? "translate-x-0" : "-translate-x-full"
       )}>
         <div className="mb-8 hidden md:flex items-center">
-          <Link href="/admin/dashboard" className="font-bebas text-2xl tracking-wide text-foreground">
+          <Link href="/admin/dashboard" className="font-bebas text-2xl tracking-wide text-white">
             MW<span className="text-primary">INDUSTRY</span>
-            <span className="text-muted-foreground text-sm ml-2 tracking-normal font-sans font-medium uppercase">Admin</span>
+            <span className="text-gray-500 text-sm ml-2 tracking-normal font-sans font-medium uppercase">Admin</span>
           </Link>
         </div>
 
@@ -61,23 +63,23 @@ export function AdminSidebar({ logoutAction }: { logoutAction: (formData: FormDa
                 href={link.href}
                 onClick={() => setIsOpen(false)}
                 className={cn(
-                  "flex items-center px-4 py-3 rounded-lg transition-colors font-medium",
+                  "flex items-center px-4 py-3 rounded-xl transition-all font-medium",
                   isActive 
-                    ? "bg-primary text-primary-foreground" 
-                    : "text-muted-foreground hover:bg-secondary hover:text-foreground"
+                    ? "bg-primary text-white shadow-lg shadow-primary/20 scale-[1.02]" 
+                    : "text-gray-400 hover:bg-white/5 hover:text-white"
                 )}
               >
-                <Icon className="w-5 h-5 mr-3" />
+                <Icon className={cn("w-5 h-5 mr-3", isActive ? "text-white" : "text-gray-500")} />
                 {link.name}
               </Link>
             );
           })}
         </nav>
 
-        <form action={logoutAction} className="mt-8 border-t border-border/50 pt-6">
+        <form action={logoutAction} className="mt-8 border-t border-white/5 pt-6">
           <button 
             type="submit"
-            className="w-full flex items-center px-4 py-3 text-muted-foreground hover:bg-destructive/10 hover:text-destructive rounded-lg transition-colors font-medium"
+            className="w-full flex items-center px-4 py-3 text-gray-500 hover:bg-destructive/10 hover:text-destructive rounded-xl transition-colors font-medium"
           >
             <LogOut className="w-5 h-5 mr-3" />
             Sign Out

@@ -24,6 +24,7 @@ export const products = pgTable("products", {
   stock_quantity: integer("stock_quantity").default(0),
   features: jsonb("features").$type<string[]>(),
   specifications: jsonb("specifications").$type<Record<string, string>>(),
+  colors: jsonb("colors").$type<{name: string, hex: string}[]>(),
   images: jsonb("images").$type<string[]>(),
   created_at: timestamp("created_at").defaultNow(),
   updated_at: timestamp("updated_at").defaultNow(),
@@ -83,3 +84,28 @@ export const articles = pgTable("articles", {
   updated_at: timestamp("updated_at").defaultNow(),
 });
 
+export const announcements = pgTable("announcements", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  title: varchar("title", { length: 255 }),
+  subtitle: varchar("subtitle", { length: 255 }),
+  button_text: varchar("button_text", { length: 100 }),
+  button_link: varchar("button_link", { length: 255 }),
+  is_active: boolean("is_active").default(true),
+  priority: integer("priority").default(0),
+  created_at: timestamp("created_at").defaultNow(),
+  updated_at: timestamp("updated_at").defaultNow(),
+});
+
+export const heroSlides = pgTable("hero_slides", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  title: varchar("title", { length: 255 }), // e.g. Zeno Series
+  headline: varchar("headline", { length: 255 }), // e.g. Effortlessly Unlock
+  button_text: varchar("button_text", { length: 100 }),
+  button_link: varchar("button_link", { length: 255 }),
+  image_url: text("image_url"), // Main product image or group image
+  bg_color: varchar("bg_color", { length: 50 }).default("#f5f5f5"),
+  is_active: boolean("is_active").default(true),
+  priority: integer("priority").default(0),
+  created_at: timestamp("created_at").defaultNow(),
+  updated_at: timestamp("updated_at").defaultNow(),
+});

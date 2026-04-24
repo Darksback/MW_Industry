@@ -5,30 +5,30 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  --background: #000000;
-  --foreground: #ffffff;
-  --card: #252627;
-  --card-foreground: #ffffff;
-  --popover: #252627;
-  --popover-foreground: #ffffff;
-  --primary: #006fcf;
+  --background: #fdfbf7;
+  --foreground: #1a1a1a;
+  --card: #ffffff;
+  --card-foreground: #1a1a1a;
+  --popover: #ffffff;
+  --popover-foreground: #1a1a1a;
+  --primary: #5cb2e1;
   --primary-foreground: #ffffff;
-  --secondary: #4b4f54;
-  --secondary-foreground: #ffffff;
-  --muted: #231f20;
-  --muted-foreground: #a0a0a0;
-  --accent: #61b4e4;
-  --accent-foreground: #000000;
+  --secondary: #e5e2d9;
+  --secondary-foreground: #1a1a1a;
+  --muted: #f0ede6;
+  --muted-foreground: #666666;
+  --accent: #5cb2e1;
+  --accent-foreground: #ffffff;
   --destructive: #f48120;
   --destructive-foreground: #ffffff;
-  --border: rgba(255, 255, 255, 0.15);
-  --input: rgba(255, 255, 255, 0.15);
-  --ring: rgba(0, 111, 207, 0.5);
-  --radius: 0.3rem;
+  --border: #e5e2d9;
+  --input: #e5e2d9;
+  --ring: rgba(92, 178, 225, 0.5);
+  --radius: 0.5rem;
   
   /* Brand specific colors */
   --color-steel: #4b4f54;
-  --color-steel-light: #61b4e4;
+  --color-steel-light: #5cb2e1;
   --color-success: #3b82f6;
   --color-warning: #f48120;
 }

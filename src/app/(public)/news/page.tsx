@@ -15,14 +15,14 @@ export default async function NewsPage() {
     .orderBy(desc(articles.published_at));
 
   return (
-    <div className="min-h-screen bg-black pt-32 pb-24">
+    <div className="min-h-screen bg-background pt-32 pb-24">
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="max-w-3xl mb-20">
-          <h1 className="font-bebas text-6xl md:text-8xl text-white tracking-tight mb-6">
+          <h1 className="font-bebas text-6xl md:text-8xl text-foreground tracking-tight mb-6">
             SECURITY <span className="text-primary italic">INSIGHTS.</span>
           </h1>
-          <p className="text-xl text-gray-400 leading-relaxed">
+          <p className="text-xl text-muted-foreground leading-relaxed">
             The latest updates in smart access technology, industrial safety protocols, 
             and modern residential security trends from the MW Industry engineering team.
           </p>
@@ -34,7 +34,7 @@ export default async function NewsPage() {
             <Link 
               key={article.id} 
               href={`/news/${article.slug}`} 
-              className="group flex flex-col bg-card/20 border border-white/5 rounded-[2.5rem] overflow-hidden transition-all hover:border-primary/30 hover:bg-card/30 shadow-2xl"
+              className="group flex flex-col bg-white border border-border rounded-[2.5rem] overflow-hidden transition-all hover:border-primary/30 hover:shadow-2xl"
             >
               <div className="relative aspect-[16/10] overflow-hidden">
                 {article.featured_image ? (
@@ -50,14 +50,14 @@ export default async function NewsPage() {
                   </div>
                 )}
                 <div className="absolute top-6 left-6">
-                  <div className="px-4 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-white/10 text-primary text-xs font-bold uppercase tracking-widest">
+                  <div className="px-4 py-1.5 rounded-full bg-white/80 backdrop-blur-md border border-white/20 text-primary text-xs font-bold uppercase tracking-widest">
                     {article.category || "General"}
                   </div>
                 </div>
               </div>
               
               <div className="p-10 flex flex-col flex-1">
-                <div className="flex items-center gap-4 text-xs text-gray-500 mb-6 font-medium">
+                <div className="flex items-center gap-4 text-xs text-muted-foreground mb-6 font-medium">
                   <div className="flex items-center gap-1.5">
                     <Calendar className="w-3.5 h-3.5" />
                     {article.published_at ? new Date(article.published_at).toLocaleDateString(undefined, {
@@ -68,15 +68,15 @@ export default async function NewsPage() {
                   </div>
                 </div>
                 
-                <h2 className="text-2xl font-bold text-white mb-4 group-hover:text-primary transition-colors line-clamp-2 leading-tight">
+                <h2 className="text-2xl font-bold text-foreground mb-4 group-hover:text-primary transition-colors line-clamp-2 leading-tight">
                   {article.title}
                 </h2>
                 
-                <p className="text-gray-400 leading-relaxed line-clamp-3 mb-8">
+                <p className="text-muted-foreground leading-relaxed line-clamp-3 mb-8">
                   {article.excerpt}
                 </p>
                 
-                <div className="mt-auto flex items-center text-white font-bold group-hover:translate-x-2 transition-transform">
+                <div className="mt-auto flex items-center text-foreground font-bold group-hover:translate-x-2 transition-transform">
                   Read Article <ArrowRight className="ml-2 w-5 h-5 text-primary" />
                 </div>
               </div>
@@ -84,10 +84,10 @@ export default async function NewsPage() {
           ))}
           
           {allArticles.length === 0 && (
-            <div className="col-span-full py-32 text-center border border-dashed border-white/10 rounded-[3rem]">
-              <Newspaper className="w-16 h-16 text-gray-700 mx-auto mb-6" />
-              <h3 className="text-2xl font-bold text-white mb-2">No Articles Yet</h3>
-              <p className="text-gray-500">Check back soon for the latest security updates.</p>
+            <div className="col-span-full py-32 text-center border border-dashed border-border rounded-[3rem]">
+              <Newspaper className="w-16 h-16 text-muted-foreground mx-auto mb-6" />
+              <h3 className="text-2xl font-bold text-foreground mb-2">No Articles Yet</h3>
+              <p className="text-muted-foreground">Check back soon for the latest security updates.</p>
             </div>
           )}
         </div>
