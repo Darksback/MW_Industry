@@ -68,3 +68,18 @@ export const admins = pgTable("admins", {
   name: varchar("name", { length: 255 }),
   created_at: timestamp("created_at").defaultNow(),
 });
+
+export const articles = pgTable("articles", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  title: varchar("title", { length: 255 }).notNull(),
+  slug: varchar("slug", { length: 255 }).notNull().unique(),
+  excerpt: text("excerpt"),
+  content: text("content"),
+  featured_image: text("featured_image"),
+  category: varchar("category", { length: 100 }),
+  is_published: boolean("is_published").default(false),
+  published_at: timestamp("published_at"),
+  created_at: timestamp("created_at").defaultNow(),
+  updated_at: timestamp("updated_at").defaultNow(),
+});
+

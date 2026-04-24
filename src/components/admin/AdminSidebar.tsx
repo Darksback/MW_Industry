@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, Package, LogOut, Menu, X } from "lucide-react";
+import { LayoutDashboard, Package, LogOut, Menu, X, Newspaper } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
@@ -14,7 +14,9 @@ export function AdminSidebar({ logoutAction }: { logoutAction: (formData: FormDa
   const navLinks = [
     { name: "Orders", href: "/admin/dashboard", icon: LayoutDashboard },
     { name: "Products", href: "/admin/products", icon: Package },
+    { name: "Articles", href: "/admin/articles", icon: Newspaper },
   ];
+
 
   return (
     <>
