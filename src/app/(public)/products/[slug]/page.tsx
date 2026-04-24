@@ -79,35 +79,35 @@ export default async function ProductDetailPage({
         {/* Product Info */}
         <div className="flex-1 flex flex-col">
           <div className="mb-6">
-            <h2 className="text-sm text-primary uppercase tracking-wider font-semibold mb-2">
+            <h2 className="text-xs sm:text-sm text-primary uppercase tracking-wider font-semibold mb-2">
               {product.category}
             </h2>
-            <h1 className="font-bebas text-4xl md:text-6xl tracking-wide text-foreground leading-[0.9] mb-4">
+            <h1 className="font-bebas text-4xl sm:text-5xl md:text-6xl tracking-wide text-foreground leading-[0.9] mb-4">
               {product.name}
             </h1>
-            <div className="flex items-center gap-4 text-sm text-muted-foreground">
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted-foreground">
               <span>Model: <span className="font-mono text-foreground">{product.model_code}</span></span>
-              <span>•</span>
+              <span className="hidden sm:inline">•</span>
               <span className={product.in_stock ? "text-green-500" : "text-destructive"}>
                 {product.in_stock ? "In Stock" : "Out of Stock"}
               </span>
             </div>
           </div>
 
-          <div className="text-3xl font-mono text-foreground mb-8">
+          <div className="text-2xl sm:text-3xl font-mono text-foreground mb-6 sm:mb-8">
             {formatPrice(product.price)}
           </div>
 
-          <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
+          <p className="text-base sm:text-lg text-muted-foreground mb-6 sm:mb-8 leading-relaxed">
             {product.full_description || product.short_description}
           </p>
 
-          <div className="mb-10">
-            <h3 className="font-bebas text-2xl tracking-wide mb-4">Key Features</h3>
-            <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div className="mb-8 sm:mb-10">
+            <h3 className="font-bebas text-xl sm:text-2xl tracking-wide mb-4">Key Features</h3>
+            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {product.features?.map((feature, index) => (
-                <li key={index} className="flex items-start gap-2 text-muted-foreground">
-                  <div className="mt-1 h-1.5 w-1.5 rounded-full bg-primary shrink-0" />
+                <li key={index} className="flex items-start gap-2 text-sm sm:text-base text-muted-foreground">
+                  <div className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary shrink-0" />
                   <span>{feature}</span>
                 </li>
               ))}

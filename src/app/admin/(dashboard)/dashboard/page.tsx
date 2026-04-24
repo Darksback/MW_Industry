@@ -71,53 +71,55 @@ export default async function AdminDashboard() {
           <CardTitle>Recent Orders</CardTitle>
         </CardHeader>
         <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Order</TableHead>
-                <TableHead>Customer</TableHead>
-                <TableHead>Date</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead className="text-right">Amount</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {ordersData.slice(0, 10).map((order) => (
-                <TableRow key={order.id} className="cursor-pointer hover:bg-secondary/50 transition-colors">
-                  <TableCell className="font-medium">
-                    <Link href={`/admin/orders/${order.id}`} className="hover:text-primary transition-colors">
-                      {order.order_number}
-                    </Link>
-                  </TableCell>
-                  <TableCell>
-                    <Link href={`/admin/orders/${order.id}`} className="block">
-                      <div>{order.customer_name}</div>
-                      <div className="text-xs text-muted-foreground">{order.customer_email}</div>
-                    </Link>
-                  </TableCell>
-                  <TableCell>
-                    {order.created_at ? new Date(order.created_at).toLocaleDateString() : "N/A"}
-                  </TableCell>
-                  <TableCell>
-                    <Badge variant={order.status?.toLowerCase() === "pending" ? "default" : "secondary"}>
-                      {order.status || "Pending"}
-                    </Badge>
-                  </TableCell>
-                  <TableCell className="text-right">
-                    {formatPrice(Number(order.total_amount || 0))}
-                  </TableCell>
-                </TableRow>
-              ))}
-              
-              {ordersData.length === 0 && (
+          <div className="overflow-x-auto">
+            <Table>
+              <TableHeader>
                 <TableRow>
-                  <TableCell colSpan={5} className="text-center py-6 text-muted-foreground">
-                    No orders found.
-                  </TableCell>
+                  <TableHead>Order</TableHead>
+                  <TableHead>Customer</TableHead>
+                  <TableHead>Date</TableHead>
+                  <TableHead>Status</TableHead>
+                  <TableHead className="text-right">Amount</TableHead>
                 </TableRow>
-              )}
-            </TableBody>
-          </Table>
+              </TableHeader>
+              <TableBody>
+                {ordersData.slice(0, 10).map((order) => (
+                  <TableRow key={order.id} className="cursor-pointer hover:bg-secondary/50 transition-colors">
+                    <TableCell className="font-medium">
+                      <Link href={`/admin/orders/${order.id}`} className="hover:text-primary transition-colors">
+                        {order.order_number}
+                      </Link>
+                    </TableCell>
+                    <TableCell>
+                      <Link href={`/admin/orders/${order.id}`} className="block">
+                        <div className="whitespace-nowrap">{order.customer_name}</div>
+                        <div className="text-xs text-muted-foreground">{order.customer_email}</div>
+                      </Link>
+                    </TableCell>
+                    <TableCell className="whitespace-nowrap">
+                      {order.created_at ? new Date(order.created_at).toLocaleDateString() : "N/A"}
+                    </TableCell>
+                    <TableCell>
+                      <Badge variant={order.status?.toLowerCase() === "pending" ? "default" : "secondary"}>
+                        {order.status || "Pending"}
+                      </Badge>
+                    </TableCell>
+                    <TableCell className="text-right font-mono">
+                      {formatPrice(Number(order.total_amount || 0))}
+                    </TableCell>
+                  </TableRow>
+                ))}
+                
+                {ordersData.length === 0 && (
+                  <TableRow>
+                    <TableCell colSpan={5} className="text-center py-6 text-muted-foreground">
+                      No orders found.
+                    </TableCell>
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </div>
         </CardContent>
       </Card>
     </div>

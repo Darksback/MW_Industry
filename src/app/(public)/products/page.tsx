@@ -34,45 +34,39 @@ export default async function ProductsPage({
         </p>
       </div>
 
-      <div className="flex flex-col md:flex-row gap-8">
+      <div className="flex flex-col lg:flex-row gap-8">
         {/* Sidebar Filters */}
-        <aside className="w-full md:w-64 shrink-0 space-y-8">
-          <div>
-            <h3 className="font-bebas text-xl tracking-wide mb-4">Categories</h3>
-            <ul className="space-y-2">
-              <li>
-                <Link 
-                  href="/products" 
-                  className={`text-sm ${!category ? 'text-primary font-medium' : 'text-muted-foreground hover:text-foreground'}`}
-                >
-                  All Products
-                </Link>
-              </li>
-              <li>
-                <Link 
-                  href="/products?category=Residential" 
-                  className={`text-sm ${category === 'Residential' ? 'text-primary font-medium' : 'text-muted-foreground hover:text-foreground'}`}
-                >
-                  Residential
-                </Link>
-              </li>
-              <li>
-                <Link 
-                  href="/products?category=Commercial" 
-                  className={`text-sm ${category === 'Commercial' ? 'text-primary font-medium' : 'text-muted-foreground hover:text-foreground'}`}
-                >
-                  Commercial
-                </Link>
-              </li>
-              <li>
-                <Link 
-                  href="/products?category=Industrial" 
-                  className={`text-sm ${category === 'Industrial' ? 'text-primary font-medium' : 'text-muted-foreground hover:text-foreground'}`}
-                >
-                  Industrial
-                </Link>
-              </li>
-            </ul>
+        <aside className="w-full lg:w-64 shrink-0">
+          <div className="flex flex-col gap-6">
+            <h3 className="font-bebas text-xl tracking-wide hidden lg:block">Categories</h3>
+            
+            {/* Horizontal scroll for mobile, vertical list for desktop */}
+            <div className="flex lg:flex-col overflow-x-auto lg:overflow-x-visible pb-2 lg:pb-0 gap-2 lg:gap-2 no-scrollbar">
+              <Link 
+                href="/products" 
+                className={`whitespace-nowrap px-4 py-2 lg:px-0 lg:py-0 text-sm rounded-full lg:rounded-none border lg:border-0 ${!category ? 'bg-primary text-primary-foreground lg:bg-transparent lg:text-primary lg:font-medium' : 'text-muted-foreground hover:text-foreground border-border'}`}
+              >
+                All Products
+              </Link>
+              <Link 
+                href="/products?category=Residential" 
+                className={`whitespace-nowrap px-4 py-2 lg:px-0 lg:py-0 text-sm rounded-full lg:rounded-none border lg:border-0 ${category === 'Residential' ? 'bg-primary text-primary-foreground lg:bg-transparent lg:text-primary lg:font-medium' : 'text-muted-foreground hover:text-foreground border-border'}`}
+              >
+                Residential
+              </Link>
+              <Link 
+                href="/products?category=Commercial" 
+                className={`whitespace-nowrap px-4 py-2 lg:px-0 lg:py-0 text-sm rounded-full lg:rounded-none border lg:border-0 ${category === 'Commercial' ? 'bg-primary text-primary-foreground lg:bg-transparent lg:text-primary lg:font-medium' : 'text-muted-foreground hover:text-foreground border-border'}`}
+              >
+                Commercial
+              </Link>
+              <Link 
+                href="/products?category=Industrial" 
+                className={`whitespace-nowrap px-4 py-2 lg:px-0 lg:py-0 text-sm rounded-full lg:rounded-none border lg:border-0 ${category === 'Industrial' ? 'bg-primary text-primary-foreground lg:bg-transparent lg:text-primary lg:font-medium' : 'text-muted-foreground hover:text-foreground border-border'}`}
+              >
+                Industrial
+              </Link>
+            </div>
           </div>
         </aside>
 
