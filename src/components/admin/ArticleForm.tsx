@@ -30,14 +30,14 @@ import { Loader2, Upload, X } from "lucide-react";
 import Image from "next/image";
 import { createArticle, updateArticle } from "@/app/actions/admin/articles";
 
-const formSchema = z.zod.object({
+const formSchema = z.object({
   title: z.string().min(2, "Title must be at least 2 characters"),
   slug: z.string().min(2, "Slug must be at least 2 characters").regex(/^[a-z0-9-]+$/, "Slug can only contain lowercase letters, numbers, and hyphens"),
   excerpt: z.string().optional(),
   content: z.string().min(10, "Content must be at least 10 characters"),
   featured_image: z.string().optional(),
   category: z.string().optional(),
-  is_published: z.boolean().default(false),
+  is_published: z.boolean(),
 });
 
 type ArticleFormValues = z.infer<typeof formSchema>;
@@ -53,14 +53,14 @@ export function ArticleForm({ initialData }: ArticleFormProps) {
 
   const form = useForm<ArticleFormValues>({
     resolver: zodResolver(formSchema),
-    defaultValues: initialData || {
-      title: "",
-      slug: "",
-      excerpt: "",
-      content: "",
-      featured_image: "",
-      category: "News",
-      is_published: false,
+    defaultValues: {
+      title: initialData?.title || "",
+      slug: initialData?.slug || "",
+      excerpt: initialData?.excerpt || "",
+      content: initialData?.content || "",
+      featured_image: initialData?.featured_image || "",
+      category: initialData?.category || "News",
+      is_published: initialData?.is_published ?? false,
     },
   });
 
@@ -173,7 +173,7 @@ export function ArticleForm({ initialData }: ArticleFormProps) {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Category</FormLabel>
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <Select onValueChange={field.onChange} defaultValue={field.value || undefined}>
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue placeholder="Select a category" />
